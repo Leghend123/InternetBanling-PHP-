@@ -1,0 +1,717 @@
+body{
+	font-family: 'Raleway', Arial, 'sans-serif'!important;
+	padding: 0;
+	overflow-x:hidden ;
+
+}
+.navbar{
+	background-color: #0693e3;
+    
+}
+#navbar_child h5{
+	font-size: 15px;
+}
+
+#navbar_child-1{
+font-size: 13px;
+margin-left: 290px;
+font-weight:bold;
+
+}
+
+#nav-item{
+	font-size: 13px;
+	display: flex;
+
+	flex-direction: row;
+}
+#nav-item div i{
+	font-size:15px;
+	margin-right: 2px;
+	 
+}
+
+#nav-item div a{
+	display: flex;
+	align-items: center;
+	margin-right: 2px;
+	text-decoration: none;
+	color: white;
+}
+
+
+
+#help a{
+	display: flex;
+	align-items: center;
+	margin-right: 10px;
+	text-decoration: none;
+	color: white;
+}
+#help i{
+	margin-right: 5px;
+	margin-top: -15px;
+}
+#alert a{
+	display: flex;
+	align-items: center;
+	margin-right: 10px;
+	text-decoration: none;
+	color: white;
+	
+}
+#alert i{
+	margin-right: 5px;
+	margin-top: -15px;
+}
+#mail a{
+	display: flex;
+	align-items: center;
+	margin-right: 10px;
+	text-decoration: none;
+	color: white;
+}
+#mail i{
+	margin-right: 5px;
+	margin-top: -15px;
+}
+#profile a{
+	display: flex;
+	align-items: center;
+	margin-right: 10px;
+	text-decoration: none;
+	color: white;
+}
+#profile i{
+	margin-right: 5px;
+	margin-top: -15px;
+}
+#logout a{
+	display: flex;
+	align-items: center;
+	margin-right: 10px;
+	text-decoration: none;
+	color: white;
+}
+#logout i{
+	margin-right: 5px;
+	margin-top: -15px;
+}
+#help{
+    border-right: 1px solid #8f8e8c;
+    padding-right: 10px; 
+    margin-right: 10px; 
+
+}
+#alert, #mail, #profile {
+    border-right: 1px solid #8f8e8c;
+    padding-right: 10px; 
+    margin-right: 10px; 
+}
+#img{
+	margin-top: 20px;
+}
+#bg-white {
+    height: 150px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+#home a{
+    display: flex;
+	margin-right: 10px;
+	text-decoration: none;
+	color: black;
+	border-right: 1px solid #8f8e8c;
+	margin-top: 40px;
+	padding-right: 10px;
+	font-weight: bold;
+	color: #294ebbf2;
+}
+#account a{
+    display: flex;
+	margin-right: 10px;
+	text-decoration: none;
+	color: black;
+	border-right: 1px solid #8f8e8c;
+	margin-top: 40px;
+	padding-right: 10px;
+	font-weight: bold;
+	color: #294ebbf2;
+
+}
+#payment a{
+	display: flex;
+	margin-right: 10px;
+	text-decoration: none;
+	color: black;
+	border-right: 1px solid #8f8e8c;
+	margin-top: 40px;
+	padding-right: 10px;
+	font-weight: bold;
+	color: #294ebbf2;
+
+}
+#cash a{
+	display: flex;
+	margin-right: 10px;
+	text-decoration: none;
+	color: black;
+    border-right: 1px solid #8f8e8c;
+	margin-top: 40px;
+	padding-right: 10px;
+	font-weight: bold;
+	color: #294ebbf2;
+
+}
+#admin a{
+	display: flex;
+	margin-right: 10px;
+	text-decoration: none;
+	color: black;
+	margin-top: 40px;
+	padding-right: 10px;
+	font-weight: bold;
+	color: #294ebbf2;
+
+}
+#admin a p,#cash a p,#payment a p,#account a p,#home a p{
+	margin-top: 15px;
+
+}
+
+
+
+/*account css start*/
+
+
+#accounts h5{
+	color: #007b85;
+	font-weight: lighter;
+	font-size: 20px;
+}
+#edit a{
+	text-decoration: none;
+	margin-left: 50px;
+	font-size: 15px;
+	font-weight: bold;
+}
+#print a{
+	text-decoration: none;
+	margin-left: 50px;
+	font-size: 15px;
+	font-weight: bold;
+}
+#details{
+	padding-left: 50px;
+}
+#details h6{
+	color:navy;
+	font-weight: bold;
+}
+#Recent1 h6,#Recent2 h6,#Recent3 h6,#Recent4 h6{
+	color:navy;
+	font-weight: bold;
+	margin-top: 40px;
+}
+#Recent1 a,#Recent2 a,#Recent3 a,#Recent4 a{
+	text-decoration: none;
+}
+
+.hidden{
+	display: none;
+}
+#payments{
+	color: #007b85;
+	font-size: 20px;
+}
+#pay_detail{
+	background-color:#003b5c ;
+	margin-bottom: 1px;
+	border-radius: 2px;
+	width: 83%;
+
+	
+}
+/*#internal p{
+color: white;
+padding-top: 10px;
+font-size: 15px;
+
+}*/
+.internal_wrapper{
+	background-color: #003b5c;
+	border-radius: 5px;
+/*	height: 50px;*/
+}
+
+.paybill_wrapper{
+   	background-color: #003b5c;
+	border-radius: 5px;
+/*	height: 50px;*/
+	margin-top: 3px;
+}
+
+#internal p{
+	color: white;
+	margin-top: 15px;
+
+}
+.internal_child span{
+	flex-direction: column;
+	float: right;
+	color: white;
+	margin-top:-38px;
+}
+#pay_bill p{
+color: white;
+margin-top: 15px;
+
+}
+#pay_bill span{
+  	flex-direction: column;
+	float: right;
+	color: white;
+	margin-top:-38px;
+}
+#show p {
+	color: white;
+	margin-left: 70px;
+	padding-top: 10px;
+	display: flex;
+	font-size: 15px;
+
+}
+
+
+#show p i{
+	margin-bottom: 5px;
+	margin-left: 10px;
+
+}
+#show a {
+	text-decoration: none;
+}
+#hidden-content p{
+    color: white;
+}
+.cash_management{
+	margin-top: 30px;
+}
+.cash_management h6{
+     color:#007b85 ;
+     font-weight: bold;
+     margin-right: -20px;
+
+}
+.cash_management a{
+	text-decoration: none;
+}
+
+hr .col-md-10{
+	border-top: 1px solid white;
+}
+
+hr.col-md-11{
+    border: none;
+    border-top: 1px solid #000;
+    width: 100%; 
+    
+}
+
+
+
+
+
+/*account css end*/
+
+
+
+
+/* All media respones start  */
+
+@media screen and (max-width: 1200px){
+	#navbar_child h5{
+	font-size: 12px;
+	
+}
+
+input{
+	width: 180px;
+}
+select{
+	width: 180px;
+}
+#nav-item{
+	float: right;
+	display: flex;
+	flex-direction: row;
+}
+#nav-item #help a i{
+	font-size:10px;
+	margin-right: 2px;
+	 
+}
+#nav-item #alert a i{
+	font-size:10px;
+	margin-right: 2px;
+	 
+}
+#nav-item #mail a i{
+	font-size:10px;
+	margin-right: 2px;
+	 
+}
+#nav-item #profile a i{
+	font-size:10px;
+	margin-right: 2px;
+	 
+}
+#nav-item #logout a i{
+	font-size:10px;
+	margin-right: 2px;
+	 
+}
+
+#nav-item div a{
+	display: flex;
+	align-items: center;
+	margin-right: 2px;
+	text-decoration: none;
+	color: white;
+}
+
+#nav-item div p{
+	font-size: 8px;
+	margin-top: 5px;
+	font-weight: bold;
+}
+
+#navbar_child-1{
+font-weight: bold;
+margin-left: 210px;
+font-size: 13px;
+
+}
+
+  
+
+  #bg-white{
+  	display: block;
+
+
+  }
+   #img{
+	    margin-left: 30px;
+		margin-top: 20px;
+        width: 300px;
+/*        height: 150px;*/
+   }
+
+   #nav{
+       font-size: 14px;
+       float: right;
+   }
+
+
+
+#show p {
+	color: white;
+	margin-left: 90px;
+	padding-top: 10px;
+	display: flex;
+	font-size: 15px;
+
+}
+#show p i{
+	margin-bottom: 5px;
+	margin-left: 10px;
+}
+#accounts h5{
+	color: #007b85;
+	font-weight: lighter;
+	font-size: 20px;
+	
+}
+#edit a{
+	text-decoration: none;
+    
+	font-size: 15px;
+	font-weight: bold;
+	
+}
+#print a{
+	text-decoration: none;
+
+	font-size: 15px;
+	font-weight: bold;
+
+}
+#wrapper{
+	margin-top: 70px;
+}
+}
+
+/*media end  1200*/
+@media screen and (max-width: 500px) {
+
+    #navbar_child h5{
+font-size: 8px;	
+}
+
+
+
+   
+#payments{
+	color: #007b85;
+	font-size: 15px;
+
+
+}
+#pay_detail{
+	background-color:#003b5c ;
+	margin-bottom: 1px;
+	border-radius: 2px;
+	width: 100%;
+
+	
+}
+#internal p{
+color: white;
+padding-top: 10px;
+font-size: 15px;
+
+}
+#show p {
+	color: white;
+	margin-left: 90px;
+	padding-top: 10px;
+	display: flex;
+	font-size: 15px;
+
+}
+#show p i{
+	margin-bottom: 5px;
+	margin-left: 10px;
+
+
+
+}
+}
+
+
+
+
+/* end of media response */
+
+
+@media screen and (max-width: 375px){
+body{
+	font-family: 'Raleway', Arial, 'sans-serif'!important;
+	padding: 0;
+	overflow-x:hidden ;
+
+}
+#navbar_child h5{
+	font-size: 13px;
+	
+}
+.container-fluid{
+	width: 100%;
+
+}
+#navbar_child-1{
+font-weight: bold;
+margin-left: 250px;
+font-size: 12px;
+
+}
+
+input{
+	width: 150px;
+}
+select{
+	width: 150px;
+}
+#nav-item{
+	float: right;
+	display: flex;
+	flex-direction: row;
+}
+#nav-item #help a i{
+	font-size:10px;
+	margin-right: 2px;
+	 
+}
+#nav-item #alert a i{
+	font-size:10px;
+	margin-right: 2px;
+	 
+}
+#nav-item #mail a i{
+	font-size:10px;
+	margin-right: 2px;
+	 
+}
+#nav-item #profile a i{
+	font-size:10px;
+	margin-right: 2px;
+	 
+}
+#nav-item #logout a i{
+	font-size:10px;
+	margin-right: 2px;
+	 
+}
+
+#nav-item div a{
+	display: flex;
+	align-items: center;
+	margin-right: 2px;
+	text-decoration: none;
+	color: white;
+}
+
+#nav-item div p{
+	font-size: 9px;
+	margin-top: 5px;
+	font-weight: bold;
+}
+
+#help{
+    border-right: 1px solid #8f8e8c;
+    padding-right: 5px; 
+    margin-right: 5px;
+    height: 20px; 
+
+}
+#alert, #mail, #profile {
+    border-right: 1px solid #8f8e8c;
+    padding-right: 5px; 
+    margin-right: 5px;
+    height: 20px;  
+}
+
+  
+
+  #bg-white{
+  	display: block;
+
+
+  }
+   #img{
+	    margin-left: 40px;
+        width: 300px;
+        height: 100px;
+        margin-top: -20px;
+   }
+
+   #nav{
+       font-size: 10px;
+       float: right;
+   }
+#home a{
+    display: flex;
+	margin-right: 10px;
+	text-decoration: none;
+	color: black;
+	border-right: 1px solid #8f8e8c;
+	margin-top: -5px;
+	padding-right: 10px;
+	height: 30px;
+	font-weight: bold;
+	color: #294ebbf2;
+	font-size: 8px;
+}
+#account a{
+    display: flex;
+	margin-right: 10px;
+	text-decoration: none;
+	color: black;
+	border-right: 1px solid #8f8e8c;
+	margin-top: -5px;
+	height: 30px;
+	padding-right: 10px;
+	font-weight: bold;
+	color: #294ebbf2;
+	font-size: 8px;
+
+}
+#payment a{
+	display: flex;
+	margin-right: 10px;
+	text-decoration: none;
+	color: black;
+	border-right: 1px solid #8f8e8c;
+	height: 30px;
+	margin-top: -5px;
+	padding-right: 10px;
+	font-weight: bold;
+	color: #294ebbf2;
+	font-size: 8px;
+
+}
+#cash a{
+	display: flex;
+	margin-right: 10px;
+	text-decoration: none;
+	color: black;
+    border-right: 1px solid #8f8e8c;
+	margin-top: -5px;
+	padding-right: 10px;
+	height: 30px;
+	font-weight: bold;
+	color: #294ebbf2;
+
+}
+#admin a{
+	display: flex;
+	margin-right: 10px;
+	text-decoration: none;
+	color: black;
+	margin-top: -5px;
+	padding-right: 10px;
+	font-weight: bold;
+	color: #294ebbf2;
+
+}
+#admin a p,#cash a p,#payment a p,#account a p,#home a p{
+	margin-top: 5px;
+
+}
+
+
+#show p {
+	color: white;
+	margin-left: 90px;
+	padding-top: 10px;
+	display: flex;
+	font-size: 15px;
+
+}
+#show p i{
+	margin-bottom: 5px;
+	margin-left: 10px;
+}
+#accounts h5{
+	color: #007b85;
+	font-weight: lighter;
+	font-size: 20px;
+	
+}
+#edit a{
+	text-decoration: none;
+    
+	font-size: 15px;
+	font-weight: bold;
+	
+}
+#print a{
+	text-decoration: none;
+
+	font-size: 15px;
+	font-weight: bold;
+
+}
+#wrapper{
+	margin-top: 70px;
+}
+}
