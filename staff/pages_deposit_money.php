@@ -3,7 +3,7 @@ session_start();
 include('conf/config.php');
 include('conf/checklogin.php');
 check_login();
-$staff_id = $_SESSION['staff_id'];
+$admin_id = $_SESSION['admin_id'];
 //register new account
 
 if (isset($_POST['deposit'])) {
@@ -12,6 +12,7 @@ if (isset($_POST['deposit'])) {
     $acc_name = $_POST['acc_name'];
     $account_number = $_GET['account_number'];
     $acc_type = $_POST['acc_type'];
+    //$acc_amount  = $_POST['acc_amount'];
     $tr_type  = $_POST['tr_type'];
     $tr_status = $_POST['tr_status'];
     $client_id  = $_GET['client_id'];
@@ -21,25 +22,31 @@ if (isset($_POST['deposit'])) {
     $client_phone = $_POST['client_phone'];
     $description = $_POST['tr_description'];
     $depo_type = $_POST['depo_type'];
+    $tr_date = $_POST['tr_date'];
     $check_number = $_POST['check_number'];
-    $check_image =$_FILES['check_image']['name'];
+    $back_img_check = $_FILES['back_check']['name'];
+    $front_img_check = $_FILES['front_check']['name'];   
+    $balance = getAccountBalance($client_id, $account_number, $mysqli);
 
-    move_uploaded_file($_FILES['check_image']['tmp_name'], "dist/img/" . $_FILES["check_image"]["name"]);
+    move_uploaded_file($back_img_check, "dist/img/" . $_FILES["back_check"]["name"]);
+    move_uploaded_file($_FILES['front_check']['tmp_name'], "dist/img/" . $_FILES["front_check"]["name"]);
+
+
+
     //Notication
-    $notification_details = "$client_name Has Deposited GH₵ $transaction_amt To Bank Account $account_number";
+    $notification_details = "$client_name Has Deposited GH₵  $transaction_amt To Bank Account $account_number";
 
 
     //Insert Captured information to a database table
-    $query = "INSERT INTO iB_Transactions (tr_code, account_id, acc_name, account_number, acc_type, tr_type,depo_type,description,check_image,check_number, tr_status, client_id, client_name, client_national_id, transaction_amt, client_phone) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
-    $notification = "INSERT INTO  iB_notifications (notification_details) VALUES (?)";
+    $query = "INSERT INTO ib_transactions (tr_code, account_id, acc_name, account_number, acc_type, tr_type,depo_type,description,frontcheck_image, back_checkimage,check_number, tr_status, client_id, client_name, client_national_id, transaction_amt,balance ,client_phone,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    $notification = "INSERT INTO  ib_notifications ( notification_details) VALUES (?)";
 
     $stmt = $mysqli->prepare($query);
     $notification_stmt = $mysqli->prepare($notification);
 
     //bind paramaters
     $rc = $notification_stmt->bind_param('s', $notification_details);
-    $rc = $stmt->bind_param('ssssssssssssssss', $tr_code, $account_id, $acc_name, $account_number, $acc_type, $tr_type,$depo_type,$description,$check_image,$check_number, $tr_status, $client_id, $client_name, $client_national_id, $transaction_amt, $client_phone);
+    $rc = $stmt->bind_param('sssssssssssssssssss', $tr_code, $account_id, $acc_name, $account_number, $acc_type, $tr_type,$depo_type,$description,$front_img_check,$back_img_check ,$check_number, $tr_status, $client_id, $client_name, $client_national_id, $transaction_amt,$balance, $client_phone,$tr_date);
     $stmt->execute();
     $notification_stmt->execute();
 
@@ -51,6 +58,63 @@ if (isset($_POST['deposit'])) {
         $err = "Please Try Again Or Try Later";
     }
 }
+
+
+
+
+function getAccountBalance($client_id, $account_number, $mysqli) {
+    // Fetch the initial deposit amount
+    $query = "SELECT COALESCE(SUM(transaction_amt), 0) AS initial_deposit FROM ib_transactions WHERE client_id = ? AND account_number = ? AND tr_type = 'Deposit' ORDER BY created_at ASC LIMIT 1";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param('ss', $client_id, $account_number);
+    $stmt->execute();
+    $stmt->bind_result($initial_deposit);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Calculate the total deposits for the account
+    $query = "SELECT COALESCE(SUM(transaction_amt), 0) AS total_deposits FROM ib_transactions WHERE client_id = ? AND account_number = ? AND tr_type = 'Deposit'";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param('ss', $client_id, $account_number);
+    $stmt->execute();
+    $stmt->bind_result($total_deposits);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Calculate the total withdrawals for the account
+    $query = "SELECT COALESCE(SUM(transaction_amt), 0) AS total_withdrawals FROM ib_transactions WHERE client_id = ? AND account_number = ? AND tr_type = 'Withdrawal'";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param('ss', $client_id, $account_number);
+    $stmt->execute();
+    $stmt->bind_result($total_withdrawals);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Calculate the total transfers for the account
+    $query = "SELECT COALESCE(SUM(transaction_amt), 0) AS total_transfers FROM ib_transactions WHERE client_id = ? AND account_number = ? AND tr_type = 'Transfer'";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param('ss', $client_id, $account_number);
+    $stmt->execute();
+    $stmt->bind_result($total_transfers);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Calculate the total wire transfers for the account
+    $query = "SELECT COALESCE(SUM(transfer_amount), 0) AS total_wire_transfers FROM ib_wire_transfer WHERE account_number = ? AND transfer_status = 'Success'";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param('s', $account_number);
+    $stmt->execute();
+    $stmt->bind_result($total_wire_transfers);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Calculate the account balance
+    $balance = $total_deposits - $total_withdrawals - $total_transfers - $total_wire_transfers;
+
+    return $balance;
+}
+
+
 
 ?>
 <!DOCTYPE html>
@@ -70,7 +134,7 @@ if (isset($_POST['deposit'])) {
         <!-- Content Wrapper. Contains page content -->
         <?php
         $account_id = $_GET['account_id'];
-        $ret = "SELECT * FROM  iB_bankAccounts WHERE account_id = ? ";
+        $ret = "SELECT * FROM  ib_bankaccounts WHERE account_id = ? ";
         $stmt = $mysqli->prepare($ret);
         $stmt->bind_param('i', $account_id);
         $stmt->execute(); //ok
@@ -91,7 +155,7 @@ if (isset($_POST['deposit'])) {
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="pages_dashboard.php">Dashboard</a></li>
                                     <li class="breadcrumb-item"><a href="pages_deposits">iBank Finances</a></li>
-                                    <li class="breadcrumb-item"><a href="pages_deposits">Deposits</a></li>
+                                    <li class="breadcrumb-item"><a href="pages_deposits.php">Deposits</a></li>
                                     <li class="breadcrumb-item active"><?php echo $row->acc_name; ?></li>
                                 </ol>
                             </div>
@@ -150,25 +214,29 @@ if (isset($_POST['deposit'])) {
                                                     <?php
                                                     //PHP function to generate random account number
                                                     $length = 10;
-                                                    $_transcode = substr(str_shuffle('0123456789QWERgfdsazxcvbnTYUIOqwertyuioplkjhmPASDFGHJKLMNBVCXZ'), 1, $length);
+                                                    $_transcode =  substr(str_shuffle('0123456789QWERgfdsazxcvbnTYUIOqwertyuioplkjhmPASDFGHJKLMNBVCXZ'), 1, $length);
                                                     ?>
                                                     <input type="text" name="tr_code" readonly value="<?php echo $_transcode; ?>" required class="form-control" id="exampleInputEmail1">
                                                 </div>
                                                 <div class=" col-md-6 form-group">
-                                                    <label for="exampleInputPassword1">Amount Deposited(GH₵)</label>
+                                                    <label for="exampleInputPassword1">Amount Deposited <?php echo "($row->currency_type)"; ?></label>
                                                     <input type="text" name="transaction_amt" required class="form-control" id="exampleInputEmail1">
                                                 </div>
                                                 <div class=" col-md-4 form-group" style="display:none">
                                                     <label for="exampleInputPassword1">Transaction Type</label>
-                                                    <input type="text" name="tr_type" value="Deposit" required class="form-control" id="exampleInputEmail1">
+                                                    <input type="text" name="tr_type" value="PendingDeposit" required class="form-control" id="exampleInputEmail1">
                                                 </div>
                                                 <div class=" col-md-4 form-group" style="display:none">
                                                     <label for="exampleInputPassword1">Transaction Status</label>
-                                                    <input type="text" name="tr_status" value="Success " required class="form-control" id="exampleInputEmail1">
+                                                    <input type="text" name="tr_status" value="Pending" required class="form-control" id="exampleInputEmail1">
                                                 </div>
-                                                                                                <div class=" col-md-6 form-group">
+                                                <div class=" col-md-6 form-group">
                                                     <label for="exampleInputPassword1">Description</label>
                                                     <input type="text" name="tr_description" required class="form-control" id="exampleInputEmail1">
+                                                </div>
+                                                <div class=" col-md-6 form-group">
+                                                    <label for="exampleInputPassword1">Date of Trasaction</label>
+                                                    <input type="date" name="tr_date" required class="form-control" id="exampleInputEmail1">
                                                 </div>
 
                                                 <div class=" col-md-6 form-group">
@@ -185,12 +253,15 @@ if (isset($_POST['deposit'])) {
                                                     <input type="text" id="checkNumber" name="check_number" class="form-control">
                                                   </div>
                                                   <div class="col-md-12 form-group">
-                                                      <label for="checkImage">Upload Check Image</label>
-                                                      <input type="file" id="checkImage" name="check_image" class="form-control">
+                                                      <label for="checkImage">Upload Front Check Image</label>
+                                                      <input type="file" id="checkImage" name="front_check" class="form-control">
                                                   </div>
-                                              </div>
+                                                  <div class="col-md-12 form-group">
+                                                      <label for="checkImage">Upload Back Check Image</label>
+                                                      <input type="file" id="checkImage" name="back_check" class="form-control">
+                                                  </div>
 
-                                            </div>
+                                              </div>
 
                                             </div>
 
@@ -208,7 +279,6 @@ if (isset($_POST['deposit'])) {
             </div>
         <?php } ?>
         <!-- /.content-wrapper -->
-       
 
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
@@ -228,6 +298,8 @@ if (isset($_POST['deposit'])) {
     <script src="dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function() {
             bsCustomFileInput.init();

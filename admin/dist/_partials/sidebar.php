@@ -5,7 +5,7 @@
     -->
   <?php
   $admin_id = $_SESSION['admin_id'];
-  $ret = "SELECT * FROM  iB_admin  WHERE admin_id = ? ";
+  $ret = "SELECT * FROM  ib_admin  WHERE admin_id = ? ";
   $stmt = $mysqli->prepare($ret);
   $stmt->bind_param('i', $admin_id);
   $stmt->execute(); //ok
@@ -21,7 +21,7 @@
     }
 
     /* Persisit System Settings On Brand */
-    $ret = "SELECT * FROM `iB_SystemSettings` ";
+    $ret = "SELECT * FROM `ib_systemsettings` ";
     $stmt = $mysqli->prepare($ret);
     $stmt->execute(); //ok
     $res = $stmt->get_result();
@@ -184,6 +184,12 @@
                   <a href="pages_checkdeposit.php" class="nav-link">
                     <i class="fas fa-upload nav-icon"></i>
                     <p>Check Deposits</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="pages_pendingdeposits.php" class="nav-link">
+                    <i class="fas fa-upload nav-icon"></i>
+                    <p>Pending Deposits</p>
                   </a>
                 </li>
                 <li class="nav-item">
